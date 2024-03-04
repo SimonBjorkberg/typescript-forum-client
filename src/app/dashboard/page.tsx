@@ -9,8 +9,8 @@ export default function Dashboard() {
             <main className="h-full w-full ml-5 flex flex-col">
                 <ProfileBar />
                 <SearchBar />
-                <div className="bg-red-500 h-full mt-3">
-
+                <div className="bg-red-500 h-full">
+                    Dashboard
                 </div>
             </main>
         </>
