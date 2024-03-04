@@ -1,13 +1,17 @@
 import Navbar from "../components/Navbar";
 import ProfileBar from "../components/ProfileBar";
+import SearchBar from "../components/SearchBar";
 
 export default function Dashboard() {
     return (
         <>
             <Navbar />
-            <main className="h-full w-full ml-5">
+            <main className="h-full w-full ml-5 flex flex-col">
                 <ProfileBar />
-                DashBoard
+                <SearchBar />
+                <div className="bg-red-500 h-full mt-3">
+
+                </div>
             </main>
         </>
     )
