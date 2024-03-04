@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import AuthProviderWrapper from "./context/auth.context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} flex flex-row justify-between bg-neutral-900 w-[80%] h-[90vh] mx-auto my-10 text-neutral-100`} >
+        <AuthProviderWrapper>
+          {children}
+        </AuthProviderWrapper>
+      </body>
     </html>
   );
 }
