@@ -34,9 +34,9 @@ export default function Dashboard() {
     }, [threads])
 
     return (
-        <>
+        <main className="flex h-screen w-[80%] mx-auto">
             <Navbar />
-            <main className="w-full ml-5 max-h-full flex flex-col">
+            <div className="w-full ml-5 flex flex-col h-[90%] my-auto">
                 <div className="h-24">
                     <ProfileBar />
                     <SearchBar pathName={pathName} setCreateThread={setCreateThread} createThread={createThread} />
@@ -61,7 +61,7 @@ export default function Dashboard() {
                 </div> :
                     <MyEditor />
                 }
-            </main>
-        </>
+            </div>
+        </main>
     )
 }

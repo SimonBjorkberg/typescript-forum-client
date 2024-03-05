@@ -15,8 +15,11 @@ export default function MyEditor() {
 
    const pathName = usePathname();
 
-   const handleChange = (newContent: any) => {
+   const handleContent = (newContent: any) => {
       setContent(newContent);
+   };
+   const handleTitle = (newContent: any) => {
+      setTitle(newContent);
    };
 
    const handleSubmit = (e: any) => {
@@ -31,9 +34,9 @@ export default function MyEditor() {
    };
 
    return (
-      <form className="flex flex-col justify-between h-full max-h-[calc(100%-96px)] gap-2">
-         <input type='text' placeholder='Thread Title' onChange={(e) => setTitle(e.target.value)} className='w-full p-2 border border-neutral-300 bg-opacity-50 bg-neutral-800' required />
-            {ReactQuill && <ReactQuill value={content} onChange={handleChange} className='flex flex-col h-[calc(100%-116px)] max-h-[calc(100%-116px)] bg-opacity-50 bg-neutral-800' />}
+      <form className="flex flex-col justify-between h-full max-h-[calc(100%-96px)] gap-2" onSubmit={handleSubmit}>
+         <input type='text' placeholder='Thread Title' onChange={handleTitle} className='w-full p-2 border border-neutral-300 bg-opacity-50 bg-neutral-800' required />
+            {ReactQuill && <ReactQuill value={content} onChange={handleContent} className='flex flex-col h-[calc(100%-116px)] max-h-[calc(100%-116px)] bg-opacity-50 bg-neutral-800' />}
          <button className='w-full border p-4 border-[#14b78f] text-[#14b78f] hover:bg-neutral-800 transition-all duration-200'>Create Thread</button>
       </form>
    );

@@ -1,20 +1,23 @@
 'use client'
 
 import axios from 'axios'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import ProfileBar from '../components/ProfileBar'
+import Image from 'next/image'
+import icon from '../images/editIcon.png'
+import SearchBar from '../components/SearchBar'
 
 export default function Thread() {
     const [thread, setThread] = useState({})
     const searchParams = useSearchParams()
+    const router = useRouter()
 
     const id = searchParams.get('id')
 
     const getThread = async () => {
         const response: any = await axios.get(`http://localhost:5005/thread/getOne/${id}`)
-        console.log(response.data.thread)
         setThread(response.data.thread)
     }
 
@@ -23,18 +26,26 @@ export default function Thread() {
     }, [])
 
     return (
-        <>
+        <main className='flex h-screen w-[80%] mx-auto'>
             <Navbar />
-            <main className="w-full ml-5 flex flex-col">
+            <div className="w-full ml-5 flex flex-col h-[90%] my-auto">
                 <ProfileBar />
-
-                <div className=''>
-                    <div className='h-full mt-[50px] bg-opacity-30 bg-neutral-800 border border-neutral-800 p-4'>
-                        <p className='text-2xl border-b border-neutral-800 pb-2'>{thread.title}</p>
-                        <div className='mt-5 p-4' dangerouslySetInnerHTML={{ __html: thread.content }}></div>
-                    </div>
+                <div className='w-full flex justify-end my-2 h-10'>
+                    <button className="bg-[#214642] my-auto hover:bg-[#326a64] py-[6px] h-10 px-5" onClick={() => router.push(`/${thread.parentTopic}`)}>Back</button>
                 </div>
-            </main>
-        </>
+                <div className='h-full bg-opacity-30 bg-neutral-800 border border-neutral-800 p-4 overflow-y-scroll'>
+                    <h1 className='text-4xl border-b border-neutral-800 pb-2 flex justify-between'>{thread.title}
+                        <span className='h-fit my-auto' onClick={() => router.push(`/thread/edit?id=${thread._id}`)}>
+                            <Image className='w-8 rounded-md border hover:bg-neutral-200 transition-all duration-200 bg-[#14b78f] hover:cursor-pointer border-neutral-900 p-1' src={icon} alt='' />
+                        </span>
+                    </h1>
+                    <div className='mt-5 border-neutral-700 pb-2 border-b mb-8' dangerouslySetInnerHTML={{ __html: thread.content }}></div>
+                    <form>
+                        <textarea className='w-full h-40 resize-none bg-neutral-900 border-neutral-500 border p-4' required />
+                        <button className='border p-2 rounded-sm'>Comment</button>
+                    </form>
+                </div>
+            </div>
+        </main>
     );
 }

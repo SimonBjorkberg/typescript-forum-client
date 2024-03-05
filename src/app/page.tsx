@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const [active, setActive] = useState("")
 
-  const { storeToken, authenticateUser }: any = useContext(AuthContext)
+  const { storeToken, authenticateUser, isLoggedIn, isLoading }: any = useContext(AuthContext)
+  const router = useRouter()
 
   const [loginUsername, setLoginUsername] = useState("")
   const [loginPassword, setLoginPassword] = useState("")
@@ -17,12 +18,6 @@ export default function Home() {
   const [signupEmail, setSignupEmail] = useState("")
   const [signupPassword, setSignupPassword] = useState("")
   const [signupRepeatPassword, setSignupRepeatPassword] = useState("")
-
-  const router = useRouter()
-
-  useEffect(() => {
-    setErrorMessage("")
-  }, [active])
 
   const handleSignupUsername = (e: any) => {
     setSignupUsername(e.target.value)
@@ -76,35 +71,60 @@ export default function Home() {
       })
   }
 
-  return (
-    <main className="flex flex-col w-[80%] mx-auto items-center text-center h-screen">
-      <div className="my-auto flex flex-col gap-3 w-[400px]">
-        {!active && <h1 className="text-3xl mb-20 font-light">In order to access this page <br /> you need to <span className="text-[#14b78f]">Log In</span>!</h1>}
+  useEffect(() => {
+    setErrorMessage("")
+  }, [active])
 
-        <div className={`${active === "login" ? "flex" : "hidden"} mx-auto w-full`}>
-          <form className="flex flex-col gap-2 w-full" onSubmit={handleLogin}>
-            <input className="p-3 text-xl text-black" type="name" placeholder="Username" onChange={handleLoginUsername} required />
-            <input className="p-3 text-xl text-black" type="password" placeholder="Password" onChange={handleLoginPassword} required />
-            {errorMessage && <p className="text-red-500 font-normal">{errorMessage}</p>}
-            <button className="border py-4 hover:bg-neutral-800 text-[#14b78f] border-[#14b78f]">Log In</button>
-          </form>
-        </div>
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/dashboard')
+    }
+  }, [isLoggedIn])
 
-        <div className={`${active === "signup" ? "flex" : "hidden"} mx-auto w-full`}>
-          <form className="flex flex-col gap-2 w-full" onSubmit={handleSignup}>
-            <input className="p-3 text-xl text-black" type="name" placeholder="Username" onChange={handleSignupUsername} required />
-            <input className="p-3 text-xl text-black mb-4" type="email" placeholder="Email" required onChange={handleSignupEmail} />
-            <input className="p-3 text-xl text-black" type="password" placeholder="Password" required onChange={handleSignupPassword} />
-            <input className="p-3 text-xl text-black" type="password" placeholder="Repeat Password" required onChange={handleSignupRepeatPassword} />
-            {errorMessage && <p className="text-red-500 font-normal">{errorMessage}</p>}
-            <button className="border py-4 hover:bg-neutral-800 text-[#14b78f] border-[#14b78f]">Sign Up</button>
-          </form>
-        </div>
-
-        {!active && <button className="border py-4 border-[#14b78f] text-[#14b78f] hover:bg-neutral-800" onClick={() => setActive("login")}>Log In</button>}
-        {!active && <button className="border py-4 hover:bg-neutral-800" onClick={() => setActive("signup")}>Sign Up</button>}
-        {active && <button className="border py-4 hover:bg-neutral-800" onClick={() => setActive("")}>Back</button>}
+  if (isLoading) {
+    return (
+      <div
+        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+        role="status">
+        <span
+          className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+        >Loading...</span
+        >
       </div>
-    </main>
-  );
+    )
+  }
+
+  if (!isLoading && !isLoggedIn) {
+    return (
+      <main className="flex flex-col w-[80%] mx-auto items-center text-center h-screen">
+        <div className="my-auto flex flex-col gap-3 w-[400px] h-fit">
+          {!active && <h1 className="text-3xl mb-10 font-light">In order to access this page <br /> you need to <span className="text-[#14b78f]">Log In</span>!</h1>}
+
+          <div className={`${active === "login" ? "flex" : "hidden"} mx-auto w-full`}>
+            <form className="flex flex-col gap-2 w-full" onSubmit={handleLogin}>
+              <input className="p-3 text-xl text-black" type="name" placeholder="Username" onChange={handleLoginUsername} required />
+              <input className="p-3 text-xl text-black" type="password" placeholder="Password" onChange={handleLoginPassword} required />
+              {errorMessage && <p className="text-red-500 font-normal">{errorMessage}</p>}
+              <button className="border py-4 hover:bg-neutral-800 text-[#14b78f] border-[#14b78f]">Log In</button>
+            </form>
+          </div>
+
+          <div className={`${active === "signup" ? "flex" : "hidden"} mx-auto w-full`}>
+            <form className="flex flex-col gap-2 w-full" onSubmit={handleSignup}>
+              <input className="p-3 text-xl text-black" type="name" placeholder="Username" onChange={handleSignupUsername} required />
+              <input className="p-3 text-xl text-black mb-4" type="email" placeholder="Email" required onChange={handleSignupEmail} />
+              <input className="p-3 text-xl text-black" type="password" placeholder="Password" required onChange={handleSignupPassword} />
+              <input className="p-3 text-xl text-black" type="password" placeholder="Repeat Password" required onChange={handleSignupRepeatPassword} />
+              {errorMessage && <p className="text-red-500 font-normal">{errorMessage}</p>}
+              <button className="border py-4 hover:bg-neutral-800 text-[#14b78f] border-[#14b78f]">Sign Up</button>
+            </form>
+          </div>
+
+          {!active && <button className="border py-4 border-[#14b78f] text-[#14b78f] hover:bg-neutral-800" onClick={() => setActive("login")}>Log In</button>}
+          {!active && <button className="border py-4 hover:bg-neutral-800" onClick={() => setActive("signup")}>Sign Up</button>}
+          {active && <button className="border py-4 hover:bg-neutral-800" onClick={() => setActive("")}>Back</button>}
+        </div>
+      </main>
+    );
+  }
 }
