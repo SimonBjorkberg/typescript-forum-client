@@ -17,9 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex flex-row justify-between bg-neutral-900 w-[80%] h-[90vh] mx-auto my-10 text-neutral-100`} >
+      <body className={`${inter.className} bg-neutral-900 text-neutral-100`} >
         <AuthProviderWrapper>
-          {children}
+            {children}
         </AuthProviderWrapper>
       </body>
     </html>

@@ -77,7 +77,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col w-[80%] mx-auto items-center text-center">
+    <main className="flex flex-col w-[80%] mx-auto items-center text-center h-screen">
       <div className="my-auto flex flex-col gap-3 w-[400px]">
         {!active && <h1 className="text-3xl mb-20 font-light">In order to access this page <br /> you need to <span className="text-[#14b78f]">Log In</span>!</h1>}
 

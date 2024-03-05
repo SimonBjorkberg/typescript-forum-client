@@ -5,7 +5,7 @@ import MyEditor from "../components/MyEditor";
 import Navbar from "../components/Navbar";
 import ProfileBar from "../components/ProfileBar";
 import SearchBar from "../components/SearchBar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -17,6 +17,7 @@ export default function Dashboard() {
     const getPathName = usePathname()
 
     const pathName = getPathName.slice(1)
+    const router = useRouter()
 
     const getThreads = async () => {
         const response = await axios.get(`http://localhost:5005/thread/getAll/${pathName}`)
@@ -33,14 +34,18 @@ export default function Dashboard() {
     }, [threads])
 
     return (
-        <>
+        <main className="flex h-screen w-[80%] mx-auto">
             <Navbar />
-            <main className="h-full w-full ml-5 flex flex-col">
-                <ProfileBar />
-                <SearchBar pathName={pathName} setCreateThread={setCreateThread} createThread={createThread} />
+            <div className="w-full ml-5 flex flex-col h-[90%] my-auto">
+                <div className="h-24">
+                    <ProfileBar />
+                    <SearchBar pathName={pathName} setCreateThread={setCreateThread} createThread={createThread} />
+                </div>
                 {createThread === false ? <div className="overflow-y-scroll my-1 flex flex-col gap-1" >
                     {reversedThreads?.map((thread: any) => {
-                        return <div className="min-h-24 flex bg-opacity-50 bg-neutral-800 border border-neutral-800 hover:cursor-pointer hover:bg-neutral-800 transition-all duration-100" key={thread._id}>
+                        return <div className="min-h-24 flex bg-opacity-50 bg-neutral-800 border border-neutral-800 hover:cursor-pointer hover:bg-neutral-800 transition-all duration-100" key={thread._id}
+                            onClick={() => router.push(`/thread?id=${thread._id}`)}
+                        >
                             <Image className="w-20 bg-black m-2" src="" alt="" />
                             <div className="flex flex-col justify-between m-2">
                                 <div>
@@ -56,7 +61,7 @@ export default function Dashboard() {
                 </div> :
                     <MyEditor />
                 }
-            </main>
-        </>
+            </div>
+        </main>
     )
 }
