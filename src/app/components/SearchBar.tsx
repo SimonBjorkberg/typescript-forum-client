@@ -1,8 +1,11 @@
-export default function SearchBar() {
+'use client'
+
+export default function SearchBar({ pathName, setCreateThread, createThread }: any) {
     return (
         <main className="w-full flex justify-end gap-1 my-2">
-            <button className="bg-[#214642] my-auto hover:bg-[#326a64] py-1 pr-4 pl-2"><span className="text-xl p-2">+</span> Create Topic</button>
-            <input type="text" placeholder="Search" className="my-auto py-[6px] px-2" />
+            {!createThread && <button className="bg-[#214642] my-auto hover:bg-[#326a64] h-full px-5" onClick={() => setCreateThread(true)}><span className="mr-4">+</span>Create Thread</button>}
+            {!createThread && <input type="text" placeholder="Search" className="my-auto py-[6px] px-2" />}
+            {createThread && <button className="bg-[#214642] my-auto hover:bg-[#326a64] py-[6px] h-full px-5" onClick={() => setCreateThread(false)}>Back</button>}
         </main>
     )
 }
