@@ -7,10 +7,11 @@ import Navbar from '../components/Navbar'
 import ProfileBar from '../components/ProfileBar'
 import Image from 'next/image'
 import icon from '../images/editIcon.png'
+import CreateComment from '../components/CreateComment'
+import Comments from '../components/Comments'
 
 export default function Thread() {
     const [thread, setThread] = useState({})
-    const [comment, setComment] = useState('')
     const searchParams = useSearchParams()
     const router = useRouter()
 
@@ -19,10 +20,6 @@ export default function Thread() {
     const getThread = async () => {
         const response: any = await axios.get(`http://localhost:5005/thread/getOne/${id}`)
         setThread(response.data.thread)
-    }
-
-    const handleComment = (e: any) => {
-        setComment(e.target.value)
     }
 
     useEffect(() => {
@@ -47,18 +44,18 @@ export default function Thread() {
                             </h1>
                         </div>
                         <div className='flex pb-4 border-b border-neutral-800'>
-                            <div className='bg-black w-12 h-12'></div>
+                            <div className='bg-black w-12 h-12 border border-[#14b78f]'></div>
                             <div className='flex flex-col text-sm font-light ml-2 justify-center'>
-                                <p className='font-bold text-neutral-200'>By: {thread.author?.username},</p>
-                                <p className='text-neutral-400'>At: {thread.createdAt} in {thread.parentTopic?.slice(0, 1).toUpperCase() + thread.parentTopic?.slice(1)}</p>
+                                <p className='font-bold text-[#14b78f]'>Created By {thread.author?.username},</p>
+                                <p className='text-neutral-400'>{thread.createdAt} in <span className='text-[#14b78f]'>{thread.parentTopic?.slice(0, 1).toUpperCase() + thread.parentTopic?.slice(1)}</span></p>
                             </div>
                         </div>
                     </div>
-                    <div className='mt-5 border-neutral-700 pb-2 border-b mb-8' dangerouslySetInnerHTML={{ __html: thread.content }}></div>
-                    <form>
-                        <textarea value={comment} onChange={handleComment} className='w-full h-40 resize-none bg-neutral-900 border-neutral-500 border p-4' required />
-                        <button className='border p-2 rounded-sm'>Comment</button>
-                    </form>
+                    <div className='border-[#14b78f] pb-2 border-b my-5' dangerouslySetInnerHTML={{ __html: thread.content }}></div>
+                    <div className='my-10 flex flex-col gap-2'>
+                        <Comments threadId={id} />
+                    </div>
+                    <CreateComment thread={thread} />
                 </div>
             </div>
         </main>
