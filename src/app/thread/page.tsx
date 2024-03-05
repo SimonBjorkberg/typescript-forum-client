@@ -7,10 +7,10 @@ import Navbar from '../components/Navbar'
 import ProfileBar from '../components/ProfileBar'
 import Image from 'next/image'
 import icon from '../images/editIcon.png'
-import SearchBar from '../components/SearchBar'
 
 export default function Thread() {
     const [thread, setThread] = useState({})
+    const [comment, setComment] = useState('')
     const searchParams = useSearchParams()
     const router = useRouter()
 
@@ -19,6 +19,10 @@ export default function Thread() {
     const getThread = async () => {
         const response: any = await axios.get(`http://localhost:5005/thread/getOne/${id}`)
         setThread(response.data.thread)
+    }
+
+    const handleComment = (e: any) => {
+        setComment(e.target.value)
     }
 
     useEffect(() => {
@@ -41,7 +45,7 @@ export default function Thread() {
                     </h1>
                     <div className='mt-5 border-neutral-700 pb-2 border-b mb-8' dangerouslySetInnerHTML={{ __html: thread.content }}></div>
                     <form>
-                        <textarea className='w-full h-40 resize-none bg-neutral-900 border-neutral-500 border p-4' required />
+                        <textarea value={comment} onChange={handleComment} className='w-full h-40 resize-none bg-neutral-900 border-neutral-500 border p-4' required />
                         <button className='border p-2 rounded-sm'>Comment</button>
                     </form>
                 </div>
