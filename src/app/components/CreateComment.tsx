@@ -2,7 +2,7 @@ import axios from "axios"
 import { useContext, useState } from "react"
 import { AuthContext } from "../context/auth.context"
 
-export default function CreateComment({ thread }) {
+export default function CreateComment({ thread }: any) {
     const [comment, setComment] = useState('')
 
     const { loggedInUser }: any = useContext(AuthContext)
