@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 
 export default function EditThreadPage() {
-    const [thread, setThread] = useState({})
+    const [thread, setThread] = useState()
     const searchParams = useSearchParams()
 
     const id = searchParams.get('id')
@@ -25,7 +25,7 @@ export default function EditThreadPage() {
     }, [])
 
     return (
-        <main className='flex h-screen w-[80%] mx-auto'>
+        <main className='flex h-screen w-[80%] max-w-[1550px] mx-auto'>
             <Navbar />
             <div className="w-full ml-5 flex flex-col h-[90%] my-auto">
                 <div className="h-24">

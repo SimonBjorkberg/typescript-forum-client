@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import React, { useContext, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { AuthContext } from '../context/auth.context';
+import { useRouter } from 'next/navigation';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -16,17 +17,16 @@ export default function MyEditor() {
    const { loggedInUser }: any = useContext(AuthContext)
 
    const pathName = usePathname();
+   const router = useRouter()
 
    const handleContent = (newContent: any) => {
       setContent(newContent);
    };
 
-   console.log(title)
-
    const handleSubmit = async (e: any) => {
       e.preventDefault()
       const response = await axios.post('http://localhost:5005/thread/create', { title, content, parentTopic: pathName.slice(1), author: loggedInUser._id })
-      console.log(response)
+      router.push(`/thread?id=${response.data._id}`)
    };
 
    return (

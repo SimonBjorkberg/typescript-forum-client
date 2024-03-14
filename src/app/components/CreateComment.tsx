@@ -1,20 +1,7 @@
-import axios from "axios"
-import { useContext, useState } from "react"
-import { AuthContext } from "../context/auth.context"
-
-export default function CreateComment({ thread }: any) {
-    const [comment, setComment] = useState('')
-
-    const { loggedInUser }: any = useContext(AuthContext)
+export default function CreateComment({ handleCommentSubmit, setComment, comment }: any) {
 
     const handleComment = (e: any) => {
         setComment(e.target.value)
-    }
-
-    const handleCommentSubmit = (e: any) => {
-        e.preventDefault()
-        axios.post('http://localhost:5005/comment/create', { author: loggedInUser._id, content: comment, parentThread: thread._id })
-        setComment("")
     }
 
     return (
