@@ -6,10 +6,12 @@ import { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import ProfileBar from '../components/ProfileBar'
 import Image from 'next/image'
-import icon from '../images/editIcon.png'
+import editIcon from '../images/editIcon.png'
+import deleteIcon from '../images/deleteIcon.png'
 import CreateComment from '../components/CreateComment'
 import Comments from '../components/Comments'
 import { AuthContext } from '../context/auth.context'
+import DeleteModal from '../components/DeleteModal'
 
 interface Thread {
     title: string,
@@ -17,6 +19,7 @@ interface Thread {
     parentTopic: string,
     author: {
         username: string,
+        _id: string,
     },
     createdAt: string,
     content: string,
@@ -40,6 +43,8 @@ export default function Thread() {
     const [thread, setThread] = useState<Thread>();
     const [comment, setComment] = useState("")
     const [comments, setComments] = useState<Comments[]>([])
+    const [deleteWindow, setDeleteWindow] = useState(false)
+
     const searchParams = useSearchParams()
     const router = useRouter()
 
@@ -57,16 +62,24 @@ export default function Thread() {
     }
 
     const handleCommentSubmit = async (e: any) => {
-        e.preventDefault()
-        const response = await axios.post('http://localhost:5005/comment/create', { author: loggedInUser._id, content: comment, parentThread: thread._id })
-        setComments(prevComments => [...prevComments, response.data.createdComment])
-        setComment("")
+        if (thread) {
+            e.preventDefault()
+            const response = await axios.post('http://localhost:5005/comment/create', { author: loggedInUser._id, content: comment, parentThread: thread._id })
+            setComments(prevComments => [...prevComments, response.data.createdComment])
+            setComment("")
+        }
+    }
+
+    const confirmDelete = () => {
+        setDeleteWindow(true);
     }
 
     useEffect(() => {
         getThread()
         getAllComments()
     }, [])
+
+    console.log(thread)
 
     return (
         <main className='flex h-screen min-h-screen w-[80%] max-w-[1550px] mx-auto'>
@@ -80,24 +93,26 @@ export default function Thread() {
                     <div className='flex flex-col border p-4 border-neutral-700'>
                         <div>
                             <h1 className='text-4xl pb-2 flex justify-between'>{thread.title}
-                                <span className='h-fit my-auto' onClick={() => router.push(`/thread/edit?id=${thread._id}`)}>
-                                    <Image className='w-8 rounded-md border hover:bg-neutral-200 transition-all duration-200 bg-[#14b78f] hover:cursor-pointer border-neutral-900 p-1' src={icon} alt='' />
-                                </span>
+                                {thread.author._id === loggedInUser._id && <span className='h-fit my-auto flex'>
+                                    <Image onClick={() => router.push(`/thread/edit?id=${thread._id}`)} className='w-8 rounded-md hover:bg-[#14b78f] transition-all duration-100 hover:cursor-pointer p-1' src={editIcon} alt='' />
+                                    <Image onClick={() => confirmDelete()} className='ml-1 w-8 rounded-md hover:bg-red-900 transition-all duration-100 hover:cursor-pointer p-1' src={deleteIcon} alt='' />
+                                </span>}
                             </h1>
                         </div>
                         <div className='flex pb-4'>
                             <div className='bg-black w-12 h-12 border border-[#14b78f]'></div>
                             <div className='flex flex-col text-sm font-light ml-2 justify-center'>
-                                <p className='font-bold text-[#14b78f]'>Created By {thread.author?.username},</p>
+                                <p className='font-bold text-[#14b78f]'>Created By {thread.author?.username}</p>
                                 <p className='text-neutral-400'>{thread.createdAt} in <span className='text-[#14b78f]'>{thread.parentTopic?.slice(0, 1).toUpperCase() + thread.parentTopic?.slice(1)}</span></p>
                             </div>
                         </div>
-                        <div className='border-neutral-700' dangerouslySetInnerHTML={{ __html: thread.content }}></div>
+                        <div dangerouslySetInnerHTML={{ __html: thread.content }}></div>
                     </div>
                     <div className='my-4 flex flex-col gap-2'>
                         <Comments comments={comments} />
                     </div>
                     <CreateComment thread={thread} handleCommentSubmit={handleCommentSubmit} setComment={setComment} comment={comment} />
+                    <DeleteModal deleteWindow={deleteWindow} setDeleteWindow={setDeleteWindow} threadId={thread._id} parentTopic={thread.parentTopic} />
                 </div>}
             </div>
         </main>

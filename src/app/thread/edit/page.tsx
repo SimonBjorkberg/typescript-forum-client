@@ -8,8 +8,14 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 
+interface Thread {
+    _id: string,
+    title: string,
+    content: string,
+}
+
 export default function EditThreadPage() {
-    const [thread, setThread] = useState()
+    const [thread, setThread] = useState<Thread>()
     const searchParams = useSearchParams()
 
     const id = searchParams.get('id')
@@ -30,11 +36,11 @@ export default function EditThreadPage() {
             <div className="w-full ml-5 flex flex-col h-[90%] my-auto">
                 <div className="h-24">
                     <ProfileBar />
-                    <div className='w-full flex justify-end my-2 h-10'>
+                    {thread && <div className='w-full flex justify-end my-2 h-10'>
                         <button className="bg-[#214642] my-auto hover:bg-[#326a64] py-[6px] h-10 px-5" onClick={() => router.push(`/thread/?id=${thread._id}`)}>Back</button>
-                    </div>
+                    </div>}
                 </div>
-                <EditThreadComponent thread={thread} />
+                <EditThreadComponent />
             </div>
         </main>
     )

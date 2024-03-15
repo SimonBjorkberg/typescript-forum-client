@@ -19,7 +19,7 @@ export default function Dashboard() {
     const router = useRouter()
 
     interface Thread {
-        id: string;
+        _id: string;
         title: string;
         numId: number;
         author: {
