@@ -12,6 +12,7 @@ import CreateComment from '../components/CreateComment'
 import Comments from '../components/Comments'
 import { AuthContext } from '../context/auth.context'
 import DeleteModal from '../components/DeleteModal'
+import topics from '../utils/topics'
 
 interface Thread {
     title: string,
@@ -45,6 +46,11 @@ export default function Thread() {
     const [comments, setComments] = useState<Comments[]>([])
     const [deleteWindow, setDeleteWindow] = useState(false)
 
+    const string = thread?.parentTopic;
+    const parent = topics.filter((topic) => {
+        return string?.toLowerCase() === topic.link
+    })
+
     const searchParams = useSearchParams()
     const router = useRouter()
 
@@ -65,7 +71,7 @@ export default function Thread() {
         if (thread) {
             e.preventDefault()
             const response = await axios.post('http://localhost:5005/comment/create', { author: loggedInUser._id, content: comment, parentThread: thread._id })
-            setComments(prevComments => [...prevComments, response.data.createdComment])
+            setComments(prevComments => [...prevComments, response.data.populatedComment])
             setComment("")
         }
     }
@@ -78,8 +84,6 @@ export default function Thread() {
         getThread()
         getAllComments()
     }, [])
-
-    console.log(thread)
 
     return (
         <main className='flex h-screen min-h-screen w-[80%] max-w-[1550px] mx-auto'>
@@ -103,7 +107,7 @@ export default function Thread() {
                             <div className='bg-black w-12 h-12 border border-[#14b78f]'></div>
                             <div className='flex flex-col text-sm font-light ml-2 justify-center'>
                                 <p className='font-bold text-[#14b78f]'>Created By {thread.author?.username}</p>
-                                <p className='text-neutral-400'>{thread.createdAt} in <span className='text-[#14b78f]'>{thread.parentTopic?.slice(0, 1).toUpperCase() + thread.parentTopic?.slice(1)}</span></p>
+                                <p className='text-neutral-400'>{thread.createdAt} in <span className='text-[#14b78f]'>{parent[0].title}</span></p>
                             </div>
                         </div>
                         <div dangerouslySetInnerHTML={{ __html: thread.content }}></div>

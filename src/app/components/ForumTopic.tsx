@@ -1,21 +1,21 @@
 import { usePathname, useRouter } from "next/navigation";
 
 interface ForumTopicProps {
-    icon: string;
     title: string;
+    link: string;
 }
 
-export default function ForumTopic({ icon, title }: ForumTopicProps) {
+export default function ForumTopic({ title, link }: ForumTopicProps) {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(`/${title.toLowerCase()}`);
+        router.push(`/${link.toLowerCase()}`);
     };
 
-    const pathName = usePathname()
+    const pathname = usePathname()
 
     return (
-        <div className={`${pathName.slice(1, 2).toUpperCase() + pathName.slice(2) === title ? "border-[#14b78f] border text-[#14b78f]" : "border border-neutral-900 text-white"} mb-1 p-3 flex text-sm transition-all duration-100 mr-5 hover:cursor-pointer hover:border-[#14b78f]`} onClick={handleClick}>
+        <div onClick={() => handleClick()} className={`${pathname.slice(1) === link ? "border-[#14b78f] border text-[#14b78f]" : "border border-neutral-900 text-white"} mb-1 p-3 flex text-sm transition-all duration-100 mr-5 hover:cursor-pointer hover:border-[#14b78f]`}>
             <p>
                 {`${title}`}
             </p>

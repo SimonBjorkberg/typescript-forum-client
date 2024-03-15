@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 interface Comment {
     _id: string,
     author: {
@@ -7,11 +9,14 @@ interface Comment {
 }
 
 export default function Comments({ comments }: any) {
+    
+    useEffect(() => {
+        console.log(comments)
+    }, [comments])
 
     return (
         <>
             {comments.map((comment: Comment) => {
-                {console.log(comment)}
                 return <div className="border p-2 flex flex-col border-neutral-700 text-neutral-300" key={comment._id}>
                     <div className='flex'>
                         <div className='bg-black w-8 h-8 border-[#14b78f] border'></div>
