@@ -50,6 +50,7 @@ export default function Dashboard() {
                     <ProfileBar />
                     <SearchBar pathName={pathName} setCreateThread={setCreateThread} createThread={createThread} />
                 </div>
+                {reversedThreads.length === 0 && <div className="text-white">No threads created yet</div>}
                 {createThread === false ? <div className="overflow-y-auto my-1 flex flex-col gap-1" >
                     {reversedThreads?.map((thread: Thread) => {
                         return <div className="min-h-24 flex bg-opacity-50 bg-neutral-800 border border-neutral-800 hover:cursor-pointer hover:bg-neutral-800 transition-all duration-100" key={thread._id}

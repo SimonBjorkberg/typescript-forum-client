@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProviderWrapper from "./context/auth.context";
+import SearchProviderWrapper from "./context/search.context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-neutral-900 text-neutral-100`} >
         <AuthProviderWrapper>
+          <SearchProviderWrapper>
             {children}
+          </SearchProviderWrapper>
         </AuthProviderWrapper>
       </body>
     </html>

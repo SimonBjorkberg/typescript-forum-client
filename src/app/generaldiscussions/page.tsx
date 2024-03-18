@@ -7,6 +7,7 @@ import ProfileBar from "../components/ProfileBar";
 import SearchBar from "../components/SearchBar";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { reverse } from "dns";
 
 export default function Dashboard() {
 
@@ -51,6 +52,7 @@ export default function Dashboard() {
                     <SearchBar pathName={pathName} setCreateThread={setCreateThread} createThread={createThread} />
                 </div>
                 {createThread === false ? <div className="overflow-y-auto my-1 flex flex-col gap-1" >
+                    {reversedThreads.length === 0 && <div className="text-white">No threads created yet</div>}
                     {reversedThreads?.map((thread: Thread) => {
                         return <div className="min-h-24 flex bg-opacity-50 bg-neutral-800 border border-neutral-800 hover:cursor-pointer hover:bg-neutral-800 transition-all duration-100" key={thread._id}
                             onClick={() => router.push(`/thread?id=${thread._id}`)}

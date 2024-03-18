@@ -22,10 +22,6 @@ const topics = [
     {
         title: "Off-Topic",
         link: "offtopic",
-    },
-    {
-        title: "Settings",
-        link: "settings",
     }
 ]
 
