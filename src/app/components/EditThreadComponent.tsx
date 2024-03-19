@@ -51,7 +51,6 @@ export default function EditThreadComponent() {
       if (thread) {
          axios.post(`http://localhost:5005/thread/edit/${id}`, { loggedInUser: loggedInUser._id, author: thread.author._id, title, content })
             .then((response) => {
-               console.log(response)
                if (response) {
                   router.push(`/thread?id=${id}`)
                }

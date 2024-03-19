@@ -1,6 +1,7 @@
 'use client'
 
 import axios from "axios"
+import { usePathname } from "next/navigation"
 import { useState, createContext, useEffect } from "react"
 export const SearchContext = createContext({})
 
@@ -8,13 +9,15 @@ export default function SearchProviderWrapper(props: any) {
     const [searchValue, setSearchValue] = useState("")
     const [searchResult, setSearchResult] = useState([])
 
+    const pathName = usePathname()
+
     const getResults = () => {
         axios.get(`http://localhost:5005/search/result/${searchValue}`)
         .then((response) => {
             setSearchResult(response.data.filteredResponse)
         })
         .catch((err) => {
-            console.log(err)
+            
         })
     }
 
@@ -26,6 +29,10 @@ export default function SearchProviderWrapper(props: any) {
     useEffect(() => {
         getResults()
     }, [searchValue])
+
+    useEffect(() => {
+        setSearchValue("")
+    }, [pathName])
 
     return (
         <SearchContext.Provider

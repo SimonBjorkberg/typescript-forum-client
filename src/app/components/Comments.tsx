@@ -9,10 +9,6 @@ interface Comment {
 }
 
 export default function Comments({ comments }: any) {
-    
-    useEffect(() => {
-        console.log(comments)
-    }, [comments])
 
     return (
         <>
