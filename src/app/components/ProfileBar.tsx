@@ -1,8 +1,8 @@
 'use client'
 
 import Image from "next/image";
-import icon from '../images/dashboard.png'
-import logoutIcon from '../images/exit.png'
+import icon from '../utils/images/dashboard.png'
+import logoutIcon from '../utils/images/exit.png'
 import { useContext } from "react";
 import { AuthContext } from "../utils/context/auth.context";
 import { useRouter } from "next/navigation";
