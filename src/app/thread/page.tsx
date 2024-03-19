@@ -93,7 +93,7 @@ export default function Thread() {
                 {thread && <div className='w-full flex justify-end my-2 h-10'>
                     <button className="bg-[#214642] my-auto hover:bg-[#326a64] py-[6px] h-10 px-5" onClick={() => router.push(`/${thread.parentTopic}`)}>Back</button>
                 </div>}
-                {thread && <div className='h-full bg-opacity-30  overflow-y-auto'>
+                {thread && <div className='h-full bg-opacity-30 overflow-y-auto'>
                     <div className='flex flex-col border p-4 border-neutral-700'>
                         <div>
                             <h1 className='text-4xl pb-2 flex justify-between'>{thread.title}
