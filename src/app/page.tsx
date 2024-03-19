@@ -85,7 +85,7 @@ export default function Home() {
     return (
       <main className="flex flex-col w-[80%] mx-auto items-center text-center h-screen">
         <div className="my-auto flex flex-col gap-3 w-[400px] h-fit">
-          {!active && <h1 className="text-3xl mb-10 font-light">In order to access this page <br /> you need to <span className="text-[#14b78f]">Log In</span>!</h1>}
+          {!active && <h1 className="text-3xl mb-10 font-light">To access this page <br /> you need to <span className="text-[#14b78f]">Log In</span>!</h1>}
 
           <div className={`${active === "login" ? "flex" : "hidden"} mx-auto w-full`}>
             <form className="flex flex-col gap-2 w-full" onSubmit={handleLogin}>

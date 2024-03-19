@@ -2,6 +2,7 @@
 
 import { useState, useEffect, createContext } from "react";
 import authService from "../services/auth.service";
+import { useRouter } from "next/navigation";
 
 export const AuthContext = createContext({});
 
@@ -10,6 +11,8 @@ export default function AuthProviderWrapper(props: any) {
   const [isLoading, setIsLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+
+  const router = useRouter()
 
   const storeToken = (token: string) => {
     localStorage.setItem("authToken", token);
@@ -50,6 +53,12 @@ export default function AuthProviderWrapper(props: any) {
   useEffect(() => {
     authenticateUser();
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/')
+    }
+  }, [isLoggedIn])
 
   return (
     <AuthContext.Provider
