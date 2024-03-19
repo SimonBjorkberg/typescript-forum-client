@@ -10,9 +10,9 @@ import editIcon from '../images/editIcon.png'
 import deleteIcon from '../images/deleteIcon.png'
 import CreateComment from '../components/CreateComment'
 import Comments from '../components/Comments'
-import { AuthContext } from '../context/auth.context'
+import { AuthContext } from '../utils/context/auth.context'
 import DeleteModal from '../components/DeleteModal'
-import topics from '../utils/topics'
+import topics from '../utils/data/topics'
 
 interface Thread {
     title: string,

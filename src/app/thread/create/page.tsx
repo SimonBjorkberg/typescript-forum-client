@@ -1,9 +1,9 @@
 'use client'
 
-import MyEditor from "@/app/components/MyEditor";
+import MyEditor from "@/app/components/CreateThread";
 import Navbar from "@/app/components/Navbar";
 import ProfileBar from "@/app/components/ProfileBar";
-import topics from "@/app/utils/topics";
+import topics from "@/app/utils/data/topics";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 

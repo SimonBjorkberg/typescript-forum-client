@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation"
 import { useContext } from "react"
-import { SearchContext } from "../context/search.context"
-import topics from '../utils/topics'
+import { SearchContext } from "../utils/context/search.context"
+import topics from '../utils/data/topics'
 
 export default function SearchResultContainer({ thread }: any) {
     const router = useRouter()

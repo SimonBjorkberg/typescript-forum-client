@@ -2,22 +2,28 @@
 
 import axios from 'axios';
 import dynamic from 'next/dynamic';
-import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import React, { useContext, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../utils/context/auth.context';
 import { useRouter } from 'next/navigation';
+import topics from '../utils/data/topics';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function MyEditor() {
    const [content, setContent] = useState("");
    const [title, setTitle] = useState("");
-
    const { loggedInUser }: any = useContext(AuthContext)
 
-   const pathName = usePathname();
    const router = useRouter()
+
+   const searchParams = useSearchParams()
+   const topicId: any = searchParams.get('topic')
+
+   const link = topics.filter((topic) => {
+       return topic.link.includes(topicId)
+   })
 
    const handleContent = (newContent: any) => {
       setContent(newContent);
@@ -25,7 +31,7 @@ export default function MyEditor() {
 
    const handleSubmit = async (e: any) => {
       e.preventDefault()
-      const response = await axios.post('http://localhost:5005/thread/create', { title, content, parentTopic: pathName.slice(1), author: loggedInUser._id })
+      const response = await axios.post('http://localhost:5005/thread/create', { title, content, parentTopic: link[0].link, author: loggedInUser._id })
       router.push(`/thread?id=${response.data._id}`)
    };
 

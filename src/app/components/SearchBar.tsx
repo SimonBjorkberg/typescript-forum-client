@@ -1,7 +1,7 @@
 'use client'
 
 import { useContext } from "react"
-import { SearchContext } from "../context/search.context"
+import { SearchContext } from "../utils/context/search.context"
 import SearchResultContainer from "./SearchResultContainer"
 import { usePathname, useRouter } from "next/navigation"
 

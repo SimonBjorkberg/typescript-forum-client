@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../utils/context/auth.context';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -16,7 +16,6 @@ interface Thread {
 
 export default function EditThreadComponent() {
    const { loggedInUser }: any = useContext(AuthContext)
-   console.log(loggedInUser)
 
    const [thread, setThread] = useState<Thread>()
    const [title, setTitle] = useState('')
@@ -42,9 +41,6 @@ export default function EditThreadComponent() {
    const handleChange = (newContent: any) => {
       setContent(newContent);
    };
-   const handleTitle = (newContent: any) => {
-      setTitle(newContent);
-   };
 
    const handleSubmit = (e: any) => {
       e.preventDefault()
@@ -63,7 +59,7 @@ export default function EditThreadComponent() {
 
    return (
       <form className="flex flex-col justify-between h-full max-h-[calc(100%-96px)] gap-2" onSubmit={handleSubmit}>
-         <input value={title} onChange={handleTitle} type='text' placeholder='Thread Title' className='w-full p-2 border border-neutral-300 bg-opacity-50 bg-neutral-800' required />
+         <input value={title} onChange={(e) => setTitle(e.target.value)} type='text' placeholder='Thread Title' className='w-full p-2 border border-neutral-300 bg-opacity-50 bg-neutral-800' required />
          {ReactQuill && <ReactQuill value={content} onChange={handleChange} className='flex flex-col h-[calc(100%-116px)] max-h-[calc(100%-116px)] bg-opacity-50 bg-neutral-800' />}
          {errorMessage && <p className='mx-auto text-red-500'>{errorMessage}</p>}
          <button className='w-full border p-4 border-[#14b78f] text-[#14b78f] hover:bg-neutral-800 transition-all duration-200'>Update Thread</button>

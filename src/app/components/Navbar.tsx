@@ -1,7 +1,7 @@
 "use client"
 
 import ForumTopic from "./ForumTopic"
-import topics from '../utils/topics'
+import topics from '../utils/data/topics'
 
 export default function Navbar() {
 
