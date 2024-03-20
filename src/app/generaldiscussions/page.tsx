@@ -21,7 +21,7 @@ interface Thread {
 export default function Dashboard() {
     const [threads, setThreads] = useState([])
     const [reversedThreads, setReversedThreads] = useState([])
-    const getPathName = usePathname()
+    const getPathName = usePathname() 
 
     const pathName = getPathName.slice(1)
 

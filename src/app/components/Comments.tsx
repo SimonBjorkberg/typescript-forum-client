@@ -1,11 +1,10 @@
-import { useEffect } from "react"
-
 interface Comment {
     _id: string,
     author: {
         username: string,
     }
-    createdAt: string
+    createdAt: string,
+    content: string,
 }
 
 export default function Comments({ comments }: any) {
@@ -21,7 +20,7 @@ export default function Comments({ comments }: any) {
                             <p className='text-neutral-400'>{comment.createdAt}</p>
                         </div>
                     </div>
-                    <p className="my-2 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat aspernatur quidem quaerat, blanditiis molestiae accusamus. Iste voluptates sequi aliquid nisi possimus in consequatur, odio non, nihil, accusantium fuga libero error?</p>
+                    <p className="my-2 ">{comment.content}</p>
                 </div>
             })}
         </>
