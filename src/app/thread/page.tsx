@@ -1,6 +1,5 @@
 'use client'
 
-import axios from 'axios'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
@@ -13,6 +12,7 @@ import Comments from '../components/Comments'
 import { AuthContext } from '../utils/context/auth.context'
 import DeleteModal from '../components/DeleteModal'
 import topics from '../utils/data/topics'
+import threadService from '../utils/services/thread.service'
 
 interface Thread {
     title: string,
@@ -54,23 +54,23 @@ export default function Thread() {
     const searchParams = useSearchParams()
     const router = useRouter()
 
-    const id = searchParams.get('id')
+    const id: any = searchParams.get('id')
     const { loggedInUser }: any = useContext(AuthContext)
 
     const getThread = async () => {
-        const response = await axios.get(`http://localhost:5005/thread/getOne/${id}`)
+        const response = await threadService.getOne(id)
         setThread(response.data.thread)
     }
 
     const getAllComments = async () => {
-        const response: Response = await axios.get(`http://localhost:5005/comment/getAll/${id}`)
+        const response: Response = await threadService.getAllComments(id)
         setComments(response.data.allComments)
     }
 
     const handleCommentSubmit = async (e: any) => {
         if (thread) {
             e.preventDefault()
-            const response = await axios.post('http://localhost:5005/comment/create', { author: loggedInUser._id, content: comment, parentThread: thread._id })
+            const response = await threadService.createComment({ author: loggedInUser._id, content: comment, parentThread: thread._id })
             setComments(prevComments => [...prevComments, response.data.populatedComment])
             setComment("")
         }

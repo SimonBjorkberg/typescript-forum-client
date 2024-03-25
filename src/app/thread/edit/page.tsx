@@ -1,12 +1,12 @@
 'use client'
 
-import axios from "axios"
 import EditThreadComponent from "../../components/EditThreadComponent"
 import Navbar from "../../components/Navbar"
 import ProfileBar from '../../components/ProfileBar'
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
+import threadService from "@/app/utils/services/thread.service"
 
 interface Thread {
     _id: string,
@@ -18,11 +18,11 @@ export default function EditThreadPage() {
     const [thread, setThread] = useState<Thread>()
     const searchParams = useSearchParams()
 
-    const id = searchParams.get('id')
+    const id: any = searchParams.get('id')
     const router = useRouter()
 
     const getThread = async () => {
-        const response: any = await axios.get(`http://localhost:5005/thread/getOne/${id}`)
+        const response: any = await threadService.getOne(id)
         setThread(response.data.thread)
     }
 

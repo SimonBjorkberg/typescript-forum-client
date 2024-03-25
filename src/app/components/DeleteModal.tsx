@@ -1,21 +1,19 @@
 'use client'
 
-import axios from "axios"
 import { useRouter } from "next/navigation"
+import threadService from "../utils/services/thread.service"
 
 export default function DeleteModal({ deleteWindow, setDeleteWindow, threadId, parentTopic }: any) {
 
     const router = useRouter()
 
     const handleClick = async () => {
-        const response = await axios.post(`http://localhost:5005/thread/delete/${threadId}`)
+        const response = await threadService.deleteThread(threadId)
         if (response.data.message) {
             setDeleteWindow(false)
             router.push(`/${parentTopic}`)
         }
     }
-
-
 
     if (deleteWindow) {
         return (

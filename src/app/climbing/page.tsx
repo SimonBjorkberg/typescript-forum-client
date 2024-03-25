@@ -1,12 +1,12 @@
 'use client'
 
-import axios from "axios";
 import Navbar from "../components/Navbar";
 import ProfileBar from "../components/ProfileBar";
 import SearchBar from "../components/SearchBar";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThreadContainer from "../components/ThreadContainer";
+import threadService from "../utils/services/thread.service";
 
 interface Thread {
     _id: string;
@@ -26,7 +26,7 @@ export default function Dashboard() {
     const pathName = getPathName.slice(1)
 
     const getThreads = async () => {
-        const response = await axios.get(`http://localhost:5005/thread/getAll/${pathName}`)
+        const response = await threadService.getAll(pathName)
         setThreads(response.data.response)
         return;
     }

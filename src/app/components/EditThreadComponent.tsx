@@ -1,9 +1,9 @@
-import axios from 'axios';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { AuthContext } from '../utils/context/auth.context';
+import threadService from '../utils/services/thread.service';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -25,10 +25,10 @@ export default function EditThreadComponent() {
    const router = useRouter()
 
    const searchParams = useSearchParams()
-   const id = searchParams.get('id')
+   const id: any = searchParams.get('id')
 
    const getThread = async () => {
-      const response: any = await axios.get(`http://localhost:5005/thread/getOne/${id}`)
+      const response: any = await threadService.getOne(id)
       setThread(response.data.thread)
       setTitle(response.data.thread.title)
       setContent(response.data.thread.content)
@@ -42,16 +42,16 @@ export default function EditThreadComponent() {
       setContent(newContent);
    };
 
-   const handleSubmit = (e: any) => {
+   const handleSubmit = async (e: any) => {
       e.preventDefault()
       if (thread) {
-         axios.post(`http://localhost:5005/thread/edit/${id}`, { loggedInUser: loggedInUser._id, author: thread.author._id, title, content })
-            .then((response) => {
+         const responst = await threadService.editOne(id, { loggedInUser: loggedInUser._id, author: thread.author._id, title, content })
+            .then((response: any) => {
                if (response) {
                   router.push(`/thread?id=${id}`)
                }
             })
-            .catch((err) => {
+            .catch((err: { response: { data: { message: string } } }) => {
                setErrorMessage(err.response.data.message)
             })
       }
