@@ -33,7 +33,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         getThreads()
-    }, [])
+    }, [getThreads])
 
     useEffect(() => {
         setReversedThreads(threads.reverse())
@@ -52,8 +52,8 @@ export default function Dashboard() {
 
                         {reversedThreads.length === 0 && <div className="text-white">No threads created yet</div>}
 
-                        {reversedThreads?.map((thread: Thread) => {
-                            return <ThreadContainer thread={thread} />
+                        {reversedThreads?.map((thread: Thread, i) => {
+                            return <ThreadContainer key={i} thread={thread} />
                         })}
 
                     </div>
