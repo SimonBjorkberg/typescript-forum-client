@@ -1,8 +1,8 @@
 'use client'
 
-import axios from "axios"
 import { usePathname } from "next/navigation"
 import { useState, createContext, useEffect } from "react"
+import searchService from "../services/search.service"
 export const SearchContext = createContext({})
 
 export default function SearchProviderWrapper(props: any) {
@@ -12,7 +12,7 @@ export default function SearchProviderWrapper(props: any) {
     const pathName = usePathname()
 
     const getResults = () => {
-        axios.get(`http://localhost:5005/search/result/${searchValue}`)
+        searchService.getResults(searchValue)
             .then((response) => {
                 setSearchResult(response.data.filteredResponse)
             })
