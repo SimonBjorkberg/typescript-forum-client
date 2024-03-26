@@ -33,7 +33,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         getThreads()
-    }, [getThreads])
+    })
 
     useEffect(() => {
         setReversedThreads(threads.reverse())
