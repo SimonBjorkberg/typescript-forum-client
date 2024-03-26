@@ -13,10 +13,10 @@ export default function SearchProviderWrapper(props: any) {
 
     const getResults = () => {
         searchService.getResults(searchValue)
-            .then((response) => {
+            .then((response: any) => {
                 setSearchResult(response.data.filteredResponse)
             })
-            .catch((err) => {
+            .catch((err: any) => {
 
             })
     }
