@@ -8,7 +8,7 @@ class SearchService {
         });
     }
     getResults = (searchValue: string) => {
-        return axios.get(`/search/result/${searchValue}`)
+        return this.api.get(`/search/result/${searchValue}`)
     }
 }
 
