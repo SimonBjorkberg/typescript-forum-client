@@ -36,7 +36,7 @@ export default function EditThreadComponent() {
 
    useEffect(() => {
       getThread()
-   }, [])
+   })
 
    const handleChange = (newContent: any) => {
       setContent(newContent);
@@ -45,7 +45,7 @@ export default function EditThreadComponent() {
    const handleSubmit = async (e: any) => {
       e.preventDefault()
       if (thread) {
-         const responst = await threadService.editOne(id, { loggedInUser: loggedInUser._id, author: thread.author._id, title, content })
+         await threadService.editOne(id, { loggedInUser: loggedInUser._id, author: thread.author._id, title, content })
             .then((response: any) => {
                if (response) {
                   router.push(`/thread?id=${id}`)

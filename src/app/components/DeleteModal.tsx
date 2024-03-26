@@ -34,7 +34,7 @@ export default function DeleteModal({ deleteWindow, setDeleteWindow, threadId, p
                                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                         <h3 className="text-base font-semibold leading-6 text-neutral-300" id="modal-title">Delete thread</h3>
                                         <div className="mt-2">
-                                            <p className="text-sm text-neutral-500">Are you sure you want to delete the thread? The thread and it's comments will be permanently removed. This action cannot be undone.</p>
+                                            <p className="text-sm text-neutral-500">Are you sure you want to delete the thread? The thread and its comments will be permanently removed. This action cannot be undone.</p>
                                         </div>
                                     </div>
                                 </div>
