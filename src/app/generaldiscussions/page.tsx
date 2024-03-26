@@ -33,7 +33,8 @@ export default function Dashboard() {
 
     useEffect(() => {
         getThreads()
-    })
+        // eslint-disable-next-line
+    }, [])
 
     useEffect(() => {
         setReversedThreads(threads.reverse())

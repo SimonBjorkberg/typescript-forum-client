@@ -1,4 +1,5 @@
 'use client'
+
 import { useContext, useEffect, useState } from "react";
 import authService from "./utils/services/auth.service";
 import { AuthContext } from "./utils/context/auth.context";
@@ -79,7 +80,7 @@ export default function Home() {
     if (isLoggedIn) {
       router.push('/news&announcements')
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn, router])
 
   if (!isLoading && !isLoggedIn) {
     return (

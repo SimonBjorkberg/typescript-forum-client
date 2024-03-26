@@ -13,21 +13,22 @@ export default function SearchProviderWrapper(props: any) {
 
     const getResults = () => {
         axios.get(`http://localhost:5005/search/result/${searchValue}`)
-        .then((response) => {
-            setSearchResult(response.data.filteredResponse)
-        })
-        .catch((err) => {
-            
-        })
+            .then((response) => {
+                setSearchResult(response.data.filteredResponse)
+            })
+            .catch((err) => {
+
+            })
     }
 
     useEffect(() => {
         if (searchValue === "")
-        setSearchResult([])
+            setSearchResult([])
     }, [searchValue])
 
     useEffect(() => {
         getResults()
+        // eslint-disable-next-line
     }, [searchValue])
 
     useEffect(() => {

@@ -52,13 +52,14 @@ export default function AuthProviderWrapper(props: any) {
 
   useEffect(() => {
     authenticateUser();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
       router.push('/')
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn, router])
 
   return (
     <AuthContext.Provider

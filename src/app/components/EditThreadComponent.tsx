@@ -36,7 +36,8 @@ export default function EditThreadComponent() {
 
    useEffect(() => {
       getThread()
-   })
+      // eslint-disable-next-line
+   }, [])
 
    const handleChange = (newContent: any) => {
       setContent(newContent);
