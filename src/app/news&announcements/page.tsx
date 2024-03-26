@@ -51,7 +51,7 @@ export default function Dashboard() {
                     </div>
                     <div className="overflow-y-auto my-1 flex flex-col gap-1" >
 
-                        {reversedThreads.length === 0 && <div className="text-white">No threads created yet</div>}
+                        {reversedThreads.length === 0 && <div className="text-white">No threads created yet.</div>}
 
                         {reversedThreads?.map((thread: Thread, i) => {
                             return <ThreadContainer key={i} thread={thread} />
